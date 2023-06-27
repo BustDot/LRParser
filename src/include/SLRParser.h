@@ -94,7 +94,7 @@ public:
 
     void DFA(); // 构建DFA和项目集规范族
 
-    void productSLR1AnalysisTabel(); // 生成SLR1分析表
+    void productSLR1AnalysisTable(); // 生成SLR1分析表
 
     void initGrammar();
 

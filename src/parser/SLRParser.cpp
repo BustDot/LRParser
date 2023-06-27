@@ -369,7 +369,7 @@ void SLRParser::DFA() {
     }
 }
 
-void SLRParser::productSLR1AnalysisTabel() {
+void SLRParser::productSLR1AnalysisTable() {
     for (int i = 0; i < CC.items.size(); i++) {
         LR0Items &LIt = CC.items[i];
         /* 构建action表 */
@@ -505,7 +505,7 @@ void SLRParser::initGrammar() {
 
     /* 构建DFA和SLR1预测分析表 */
     DFA();
-    productSLR1AnalysisTabel();
+    productSLR1AnalysisTable();
 
     /* 读入待分析串并初始化分析栈 */
     printf("Please enter the String to be analyzed:\n");
