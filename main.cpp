@@ -1,6 +1,8 @@
 #include <iostream>
+#include "src/include/SLRParser.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    auto parser = SLRParser();
+    parser.process();
     return 0;
 }
