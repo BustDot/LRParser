@@ -1,13 +1,10 @@
-//
-// Created by sox on 2023/6/27.
-//
 #include "../include/SLRParser.h"
 
 #include <iostream>
 
 using namespace std;
 
-int SLRParser::isInT(char ch) {
+int SLR::SLRParser::isInT(char ch) {
     for (int i = 0; i < grammar.T.size(); i++) {
         if (grammar.T[i] == ch) {
             return i + 1;
@@ -16,7 +13,7 @@ int SLRParser::isInT(char ch) {
     return 0;
 }
 
-int SLRParser::isInN(char ch) {
+int SLR::SLRParser::isInN(char ch) {
     for (int i = 0; i < grammar.N.size(); i++) {
         if (grammar.N[i] == ch) {
             return i + 1;
@@ -25,7 +22,7 @@ int SLRParser::isInN(char ch) {
     return 0;
 }
 
-void SLRParser::getFirstSet() {
+void SLR::SLRParser::getFirstSet() {
     /* 终结符的FIRST集是其本身 */
     for (char X: grammar.T) {
         set<char> tmp;
@@ -90,7 +87,7 @@ void SLRParser::getFirstSet() {
     }
 }
 
-void SLRParser::getFirstByAlphaSet(vector<char> &alpha, set<char> &FS) {
+void SLR::SLRParser::getFirstByAlphaSet(vector<char> &alpha, set<char> &FS) {
     /* 当前符号是非终结符，且当前符号可以推出空，则还需判断下一个符号 */
     bool next = true;
     int idx = 0;
@@ -127,7 +124,7 @@ void SLRParser::getFirstByAlphaSet(vector<char> &alpha, set<char> &FS) {
     }
 }
 
-void SLRParser::getFollowSet() {
+void SLR::SLRParser::getFollowSet() {
     /* 初始化终结符的FOLLOW集为空集 */
     for (int i = 0; i < grammar.N.size(); i++) {
         char B = grammar.N[i];
@@ -195,7 +192,7 @@ void SLRParser::getFollowSet() {
     }
 }
 
-bool SLRParser::isInLR0Items(LR0Items &I, LR0Item &t) {
+bool SLR::SLRParser::isInLR0Items(LR0Items &I, LR0Item &t) {
     for (auto it = I.items.begin(); it != I.items.end(); it++) {
         LR0Item &item = *it;
         if (item.p == t.p && item.location == t.location)
@@ -204,7 +201,7 @@ bool SLRParser::isInLR0Items(LR0Items &I, LR0Item &t) {
     return false;
 }
 
-void SLRParser::printLR0Items(LR0Items &I) {
+void SLR::SLRParser::printLR0Items(LR0Items &I) {
     for (auto it = I.items.begin(); it != I.items.end(); it++) {
         LR0Item &L = *it;
         printf("%c->", L.p.left);
@@ -220,7 +217,7 @@ void SLRParser::printLR0Items(LR0Items &I) {
     printf("\n");
 }
 
-void SLRParser::closure(LR0Items &I) {
+void SLR::SLRParser::closure(LR0Items &I) {
     bool change = true;
     while (change) {
         change = false;
@@ -252,7 +249,7 @@ void SLRParser::closure(LR0Items &I) {
     }
 }
 
-int SLRParser::isInCanonicalCollection(LR0Items &I) {
+int SLR::SLRParser::isInCanonicalCollection(LR0Items &I) {
     for (int i = 0; i < CC.items.size(); i++) {
         LR0Items &J = CC.items[i];
         bool flag = true;
@@ -275,7 +272,7 @@ int SLRParser::isInCanonicalCollection(LR0Items &I) {
     return 0;
 }
 
-void SLRParser::go(LR0Items &I, char X, LR0Items &J) {
+void SLR::SLRParser::go(LR0Items &I, char X, LR0Items &J) {
     for (auto it = I.items.begin(); it != I.items.end(); it++) {
         LR0Item &L = *it;
         /* 非规约项目 */
@@ -297,7 +294,7 @@ void SLRParser::go(LR0Items &I, char X, LR0Items &J) {
     }
 }
 
-void SLRParser::DFA() {
+void SLR::SLRParser::DFA() {
     /* 构建初始项目集 */
     LR0Item t;
     t.location = 0;
@@ -369,7 +366,7 @@ void SLRParser::DFA() {
     }
 }
 
-void SLRParser::productSLR1AnalysisTable() {
+void SLR::SLRParser::productSLR1AnalysisTable() {
     for (int i = 0; i < CC.items.size(); i++) {
         LR0Items &LIt = CC.items[i];
         /* 构建action表 */
@@ -470,7 +467,7 @@ void SLRParser::productSLR1AnalysisTable() {
     }
 }
 
-void SLRParser::initGrammar() {
+void SLR::SLRParser::initGrammar() {
     printf("Please enter the num of production:\n");
     cin >> grammar.num;
     string s;
@@ -514,7 +511,7 @@ void SLRParser::initGrammar() {
     ST.push(pair<int, char>(0, '-'));
 }
 
-void SLRParser::process() {
+void SLR::SLRParser::process() {
     initGrammar();
     int ip = 0;
     printf("The ans:\n");
