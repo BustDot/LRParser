@@ -468,6 +468,7 @@ void SLR::SLRParser::productSLR1AnalysisTable() {
 }
 
 void SLR::SLRParser::initGrammar() {
+    freopen("../test/LR_grammar.txt", "r", stdin);
     printf("Please enter the num of production:\n");
     cin >> grammar.num;
     string s;
@@ -511,7 +512,7 @@ void SLR::SLRParser::initGrammar() {
     ST.push(pair<int, char>(0, '-'));
 }
 
-void SLR::SLRParser::process() {
+bool SLR::SLRParser::process() {
     initGrammar();
     int ip = 0;
     printf("The ans:\n");
@@ -538,9 +539,9 @@ void SLR::SLRParser::process() {
             ST.push(pair<int, char>(goton[s][j], A));
         } else if (action[s][j].first == 3) {   //接受
             printf("ACC\n");
-            return;
+            return true;
         } else {
-            printf("error\n");
+            return false;
         }
     } while (true);
 }

@@ -425,6 +425,7 @@ void LR1::LR1Parser::productLR1AnalysisTabel() {
 
 
 void LR1::LR1Parser::initGrammar() {
+    freopen("../test/LR_grammar.txt", "r", stdin);
     printf("Please enter the num of production:\n");
     cin >> grammar.num;
     string s;
@@ -499,5 +500,5 @@ void LR1::LR1Parser::process() {
         } else {
             printf("error\n");
         }
-    } while (1);
+    } while (true);
 }

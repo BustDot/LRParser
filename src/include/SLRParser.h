@@ -58,7 +58,7 @@ namespace SLR {
     };
 
     class SLRParser {
-    public:
+        public:
         string str;
         CanonicalCollection CC;
         Grammar grammar;
@@ -69,7 +69,7 @@ namespace SLR {
         int goton[100][100];
         stack<pair<int, char>> ST; // state symbol
 
-    public:
+        public:
         int isInT(char ch); // 判断ch是否是终结符
 
         int isInN(char ch); // 判断ch是否是非终结符
@@ -96,7 +96,7 @@ namespace SLR {
 
         void initGrammar();
 
-        void process();
+        bool process();
     };
 }
 #endif //LRPARSER_SLRPARSER_H
