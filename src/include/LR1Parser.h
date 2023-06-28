@@ -60,7 +60,7 @@ namespace LR1 {
     };
 
     class LR1Parser {
-    public:
+        public:
         string str;
         CanonicalCollection CC;
         Grammar grammar;
@@ -71,8 +71,32 @@ namespace LR1 {
         int goton[100][100];
         stack<pair<int, char>> ST; // state symbol
 
-    public:
+        public:
+        int isInT(char ch); // 判断ch是否是终结符
 
+        int isInN(char ch); // 判断ch是否是非终结符
+
+        void getFirstSet();
+
+        void getFirstByAlphaSet(vector<char> &alpha, set<char> &FS); // 查找alpha串的FIRST集， 保存到FS集合中
+
+        bool isInLR1Items(LR1Items &I, LR1Item &t);
+
+        void closure(LR1Items &I);
+
+        void printLR1Items(LR1Items &I);
+
+        int isInCanonicalCollection(LR1Items &I); // 判断是否在项目集规范族中，若在返回序号
+
+        void go(LR1Items &I, char X, LR1Items &J); // 转移函数，I为当前的项目集，J为转移后的项目集, 经X转移
+
+        void DFA(); // 构建DFA和项目集规范族
+
+        void productLR1AnalysisTabel(); // 生成LR1分析表
+
+        void initGrammar();
+
+        void process();
     };
 }
 #endif //LRPARSER_LR1PARSER_H
